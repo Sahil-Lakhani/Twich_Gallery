@@ -12,18 +12,29 @@ const Home: React.FC = () => {
     setChannels([...channels, channelName]);
   };
 
+  const handleRemoveChannel = (channelName: string) => {
+    setChannels(channels.filter((channel) => channel !== channelName));
+  };
+
+  const gridClass =
+    channels.length === 1
+      ? "grid-cols-1 grid-rows-1"
+      : channels.length === 2
+      ? "grid-cols-2 grid-rows-1"
+      : channels.length === 3
+      ? "grid-cols-1 grid-rows-3"
+      : channels.length === 4
+      ? "grid-cols-4 grid-rows-4"
+      : "";
+
   return (
     <div className="bg-white">
-      <FloatingInput onAddChannel={handleAddChannel} />
-      <div
-        className={`grid gap-4 ${
-          channels.length === 1
-            ? "grid-cols-1"
-            : channels.length === 2
-            ? "grid-cols-2"
-            : "grid-cols-3"
-        } md:grid-cols-2 lg:grid-cols-3`}
-      >
+      <FloatingInput
+        onAddChannel={handleAddChannel}
+        channels={channels}
+        removeChannel={handleRemoveChannel}
+      />
+      <div className={`grid ${gridClass}  h-screen`}>
         {channels.map((channel) => (
           <Stream key={channel} channelName={channel} />
         ))}

@@ -2,9 +2,15 @@ import React, { useState } from "react";
 
 interface FloatingInputProps {
   onAddChannel: (channelName: string) => void;
+  channels: string[];
+  removeChannel: (channelName: string) => void;
 }
 
-const FloatingInput: React.FC<FloatingInputProps> = ({ onAddChannel }) => {
+const FloatingInput: React.FC<FloatingInputProps> = ({
+  onAddChannel,
+  channels,
+  removeChannel,
+}) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [channelName, setChannelName] = useState<string>("");
 
@@ -50,6 +56,23 @@ const FloatingInput: React.FC<FloatingInputProps> = ({ onAddChannel }) => {
           >
             Add Stream
           </button>
+
+          <div>
+            <h3 className="font-semibold mb-2">Channel List:</h3>
+            <ul className="list-disc list-inside text-gray-700">
+              {channels.map((channel) => (
+                <li key={channel} className="border-2 flex justify-between">
+                  {channel}
+                  <button
+                    onClick={() => removeChannel(channel)}
+                    className="text-red-500 mr-2"
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
