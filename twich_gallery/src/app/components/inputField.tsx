@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 
 interface FloatingInputProps {
-  onAddChannel: (channelName: string) => void;
-  channels: string[];
-  removeChannel: (channelName: string) => void;
+  onAddStream: (streamName: string) => void;
+  streams: string[];
+  removeStream: (streamName: string) => void;
 }
 
 const FloatingInput: React.FC<FloatingInputProps> = ({
-  onAddChannel,
-  channels,
-  removeChannel,
+  onAddStream,
+  streams,
+  removeStream,
 }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
-  const [channelName, setChannelName] = useState<string>("");
+  const [streamName, setStreamName] = useState<string>("");
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChannelName(e.target.value);
+    setStreamName(e.target.value);
   };
 
   const handleAddStream = () => {
-    if (channelName.trim()) {
-      onAddChannel(channelName.trim());
-      setChannelName("");
+    if (streamName.trim()) {
+      onAddStream(streamName.trim());
+      setStreamName("");
     }
   };
 
@@ -45,7 +45,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
         <div>
           <input
             type="text"
-            value={channelName}
+            value={streamName}
             onChange={handleInputChange}
             placeholder="Enter channel name"
             className="border rounded p-2 w-full mb-2"
@@ -60,11 +60,11 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
           <div>
             <h3 className="font-semibold mb-2">Channel List:</h3>
             <ul className="list-disc list-inside text-gray-700">
-              {channels.map((channel) => (
-                <li key={channel} className="border-2 flex justify-between">
-                  {channel}
+              {streams.map((stream) => (
+                <li key={stream} className="border-2 flex justify-between">
+                  {stream}
                   <button
-                    onClick={() => removeChannel(channel)}
+                    onClick={() => removeStream(stream)}
                     className="text-red-500 mr-2"
                   >
                     ✕

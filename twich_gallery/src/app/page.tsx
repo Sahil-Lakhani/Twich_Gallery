@@ -5,38 +5,37 @@ import Stream from "./components/stream";
 import FloatingInput from "./components/inputField";
 
 const Home: React.FC = () => {
-  const [channels, setChannels] = useState<string[]>([]);
+  const [streams, setStreams] = useState<string[]>([]);
 
-  // Function to add a channel to the list
-  const handleAddChannel = (channelName: string) => {
-    setChannels([...channels, channelName]);
+  const handleAddStream = (streamName: string) => {
+    setStreams([...streams, streamName]);
   };
 
-  const handleRemoveChannel = (channelName: string) => {
-    setChannels(channels.filter((channel) => channel !== channelName));
+  const handleRemoveStream = (streamName: string) => {
+    setStreams(streams.filter((stream) => stream !== streamName));
   };
 
   const gridClass =
-    channels.length === 1
+    streams.length === 1
       ? "grid-cols-1 grid-rows-1"
-      : channels.length === 2
+      : streams.length === 2
       ? "grid-cols-2 grid-rows-1"
-      : channels.length === 3
+      : streams.length === 3
       ? "grid-cols-1 grid-rows-3"
-      : channels.length === 4
-      ? "grid-cols-4 grid-rows-4"
+      : streams.length === 4
+      ? "grid-cols-2 grid-rows-2"
       : "";
 
   return (
     <div className="bg-white">
       <FloatingInput
-        onAddChannel={handleAddChannel}
-        channels={channels}
-        removeChannel={handleRemoveChannel}
+        onAddStream={handleAddStream}
+        streams={streams}
+        removeStream={handleRemoveStream}
       />
       <div className={`grid ${gridClass}  h-screen`}>
-        {channels.map((channel) => (
-          <Stream key={channel} channelName={channel} />
+        {streams.map((stream) => (
+          <Stream key={stream} streamName={stream} />
         ))}
       </div>
     </div>
