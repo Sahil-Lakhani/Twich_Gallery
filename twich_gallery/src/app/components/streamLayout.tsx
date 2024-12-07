@@ -5,7 +5,9 @@ interface StreamLayoutProps {
   streamNames: string[];
 }
 
-const calculateLayout = (streamCount: number): {
+const calculateLayout = (
+  streamCount: number
+): {
   rows: number;
   layout: number[];
 } => {
@@ -25,16 +27,16 @@ const calculateLayout = (streamCount: number): {
   if (streamCount === 13) return { rows: 4, layout: [1, 4, 4, 4] };
   if (streamCount === 14) return { rows: 4, layout: [2, 4, 4, 4] };
   if (streamCount === 15) return { rows: 4, layout: [3, 4, 4, 4] };
-  
+
   // For 16 or more streams, create rows of 4
   const rows = Math.ceil(streamCount / 4);
   const layout = Array(rows).fill(4);
   const remainder = streamCount % 4;
-  
+
   if (remainder > 0) {
     layout[0] = remainder;
   }
-  
+
   return { rows, layout };
 };
 
@@ -45,25 +47,22 @@ const StreamLayout: React.FC<StreamLayoutProps> = ({ streamNames }) => {
   return (
     <div className="w-full h-full flex flex-col">
       {layout.map((streamsInRow, rowIndex) => {
-        const rowStreams = streamNames.slice(streamIndex, streamIndex + streamsInRow);
+        const rowStreams = streamNames.slice(
+          streamIndex,
+          streamIndex + streamsInRow
+        );
         streamIndex += streamsInRow;
-        
+
         const rowHeight = `${100 / layout.length}%`;
-        
+
         return (
-          <div
-            key={rowIndex}
-            className="flex"
-            style={{ height: rowHeight }}
-          >
+          <div key={rowIndex} className="flex" style={{ height: rowHeight }}>
             {rowStreams.map((streamName, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                // className="relative"
-                className="border-0"
                 style={{ width: `${100 / streamsInRow}%` }}
               >
-                  <Stream streamName={streamName} />
+                <Stream streamName={streamName} />
               </div>
             ))}
           </div>
